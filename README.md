@@ -8,7 +8,7 @@ Main goals for this project:
 1. Obtain audio and convert the audio to text.
 2. Display messages to the assistants in real time.
 
-## Development
+### Development
 
 This web application implements MVC architectur from scratch without using any PHP framework. We used this [project](https://github.com/googlearchive/webplatform-samples) to obtain speech-to-text and ajax to create an asynchronous chat.
 
