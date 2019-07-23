@@ -20,7 +20,8 @@ This is a web application, so you need to install Xampp to test it. In order to 
 
 1. Clone this project and store it in htdocs folder of Xampp.
 2. Import database scripts in phpMyAdmin.
-3. Run the app and enjoy!
+3. Download composer.phar and install dependences with `php composer.phar install`.
+4. Run the app and enjoy!
 
 ## Developers
 
