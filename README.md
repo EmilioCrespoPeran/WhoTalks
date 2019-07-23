@@ -10,7 +10,7 @@ Main goals for this project:
 
 ### Development
 
-This web application implements MVC architectur from scratch without using any PHP framework. We used this [project](https://github.com/googlearchive/webplatform-samples) to obtain speech-to-text and ajax to create an asynchronous chat.
+This web application implements MVC architecture from scratch without using any PHP framework. We used this [project](https://github.com/googlearchive/webplatform-samples) to obtain speech-to-text and ajax to create an asynchronous chat.
 
 ### Requirements
 
