@@ -1,0 +1,7 @@
+{% if messages|length > 0 %}
+    {% for m in messages %}
+        <p class="text-muted m-1" style="background-color: #c3e6cb;">
+            {% include 'chat/message.html.twig' %}
+        </p>
+    {% endfor %}
+{% endif %}

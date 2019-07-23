@@ -1,0 +1,225 @@
+{% extends 'template.html.twig' %}
+
+{% block js %}
+<script>
+
+    $(document).ready(function(){
+
+        fetch_messages();
+
+        setInterval(function(){
+            fetch_messages();
+        }, 1000);
+
+
+        setInterval(function(){
+            send_message();
+        }, 5000);
+
+
+        setInterval(function () {
+            if (!recognizing && click) {
+                recognition.start();
+            }
+        }, 2000);
+
+
+        function fetch_messages() {
+            $.ajax({
+                url: '{{ url_root }}meeting/messages/',
+                method: "POST",
+                success: function(data){
+                    $('#chat').html(data);
+                }
+            })
+        }
+
+        function send_message() {
+            var value = $.trim(document.getElementById("final").innerHTML);
+            if (value != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_root }}meeting/send_message/",
+                    dataType: "html",
+                    data: { "message": value },
+                    success: function() {
+                    }
+                });
+                document.getElementById("final").innerHTML = "";
+                final_transcript = "";
+            }
+
+        }
+
+/*
+        $("#form_chat").bind('submit', function (e) {
+            var value = $.trim($("#input_message").val());
+            if (value != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ url_root }}meeting/send_message/",
+                    dataType: "html",
+                    data: { "message": value },
+                    success: function() {}
+                });
+            }
+
+            e.preventDefault();
+            return false;
+        });
+*/
+    });
+
+</script>
+
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="col-12">
+
+        <h1>{{ meeting.getName }}</h1>
+
+
+        <h3>Lista de mensajes</h3>
+
+        <div class="row">
+
+            <div class="col-2">
+                <button id="btnMicro" onclick="startButton(event)">Micr&oacute;fono</button> <br/>
+                <p id="info" class="text-info"></p>
+                <p>
+                    <span id="final" style="color: black;"></span>
+                    <span id="intermediate" style="color: darkgrey;"></span>
+                </p>
+            </div>
+
+            <div id="chat" class="offset-1 col-8">
+
+
+            </div>
+        </div>
+<!--
+        <div class="row">
+            <div class="offset-2 col-8">
+                <form id="form_chat" method="POST" action="{{ url_root }}meeting/send_message/">
+                    <textarea id="input_message" cols="30" rows="2" type="text" name="message" placeholder="Escribe un mensaje"></textarea><br/>
+                    <button id="btn" type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+-->
+    </div>
+
+
+    <script>
+        var click = false;
+        displayInfo('Click on the microphone icon and begin speaking.');
+
+        var final_transcript = '';
+        var recognizing = false;
+        var ignore_onend;
+        var start_timestamp;
+
+        if (!('webkitSpeechRecognition' in window)) {
+            upgrade();
+        } else {
+
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.onstart = function() {
+                recognizing = true;
+                displayInfo('Speak now.');
+            };
+            recognition.onerror = function(event) {
+                if (event.error == 'no-speech') {
+                    displayInfo("No speech was detected. You may need to adjust your microphone settings.");
+                    ignore_onend = true;
+                }
+                if (event.error == 'audio-capture') {
+                    displayInfo("No microphone was found. Ensure that a microphone is installed and that microphone settings are configured correctly.");
+                    ignore_onend = true;
+                }
+                if (event.error == 'not-allowed') {
+                    if (event.timeStamp - start_timestamp < 100) {
+                        displayInfo("Permission to use microphone is blocked.");
+                    } else {
+                        displayInfo("Permission to use microphone was denied.");
+                    }
+                    ignore_onend = true;
+                }
+            };
+
+            recognition.onend = function() {
+                recognizing = false;
+                if (ignore_onend) {
+                    return;
+                }
+                if (!final_transcript) {
+                    displayInfo("Click on the microphone icon and begin speaking.");
+                    return;
+                }
+            };
+
+            recognition.onresult = function(event) {
+                var interim_transcript = '';
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    if (event.results[i].isFinal) {
+                        final_transcript += event.results[i][0].transcript;
+                    } else {
+                        interim_transcript += event.results[i][0].transcript;
+                    }
+                }
+                final_transcript = capitalize(final_transcript);
+                document.getElementById('final').innerHTML = linebreak(final_transcript);
+                document.getElementById('intermediate').innerHTML = linebreak(interim_transcript);
+            };
+        }
+
+
+        function upgrade() {
+            displayInfo("Web Speech API is not supported by this browser. Upgrade to Chrome version 25 or later.");
+        }
+
+
+        var two_line = /\n\n/g;
+        var one_line = /\n/g;
+        function linebreak(s) {
+            return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+        }
+        var first_char = /\S/;
+        function capitalize(s) {
+            return s.replace(first_char, function(m) { return m.toUpperCase(); });
+        }
+
+
+        function startButton(event) {
+            if (recognizing) {
+                recognition.stop();
+                document.getElementById('btnMicro').innerHTML = 'Micr&oacute;fono';
+                return;
+            }
+            click = true;
+            final_transcript = '';
+            recognition.lang = 'es-ES';
+            recognition.start();
+            ignore_onend = true;
+            document.getElementById('btnMicro').innerHTML = 'Grabando...';
+            document.getElementById('final').innerHTML = "";
+            document.getElementById('intermediate').innerHTML = "";
+            displayInfo("Click the Allow button above to enable your microphone.");
+            start_timestamp = event.timeStamp;
+        }
+
+
+
+        function displayInfo(value) {
+            document.getElementById('info').innerHTML = value;
+        }
+
+    </script>
+
+
+{% endblock %}

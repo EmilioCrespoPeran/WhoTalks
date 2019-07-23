@@ -1,0 +1,19 @@
+# Apache configuration file (see httpd.apache.org/docs/2.2/mod/quickreference.html)
+# Author: Emilio Crespo Peran y Francisco Javier Gonzalez Navarro
+# Since: February 2018
+<IfModule mod_rewrite.c>
+
+	# disable directory listing
+	Options -Indexes +FollowSymLinks -MultiViews
+
+	RewriteEngine on
+	RewriteOptions Inherit
+
+        # Necesario para las URL amigables, debe pasar siempre
+        # por el fichero index.php
+
+	RewriteCond %{REQUEST_FILENAME} !-f [OR]
+	RewriteCond %{REQUEST_FILENAME} -d
+	RewriteRule ^(.*)$ index.php [QSA,L,NS]
+
+</IfModule>
