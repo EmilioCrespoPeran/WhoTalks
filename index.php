@@ -7,6 +7,10 @@ define("SERVER", SCHEME . $_SERVER['SERVER_NAME']);
 define("URL_ROOT", SERVER . str_replace('index.php', '', $_SERVER['SCRIPT_NAME']) );
 define("PATH_APP", __DIR__);
 
+if($_SERVER["HTTPS"] != "on") {
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
 
 // Elimina 'index.php' de la uri
 if((strpos($_SERVER["REQUEST_URI"], "index.php") || strpos($_SERVER["REQUEST_URI"], "index.php/")) === true){
