@@ -1,37 +1,30 @@
-## Welcome to GitHub Pages
+## Welcome!
 
-You can use the [editor on GitHub](https://github.com/EmilioCrespoPeran/WhoTalks/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Nowadays there are a lot of companies who hold meetings, but do they take into account people who has any disability? For example, hearing, visual or movility disabilities.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+WhoTalks is a open-source project of [Fundación ONCE](https://www.fundaciononce.es/) which is addressed to people who has hearing disabilities in the meetings.
 
-### Markdown
+Main goals for this project:
+1. Obtain audio and convert the audio to text.
+2. Display messages to the assistants in real time.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Development
 
-```markdown
-Syntax highlighted code block
+This web application implements MVC architectur from scratch without using any PHP framework. We used this [project](https://github.com/googlearchive/webplatform-samples) to obtain speech-to-text and ajax to create an asynchronous chat.
 
-# Header 1
-## Header 2
-### Header 3
+### Requirements
 
-- Bulleted
-- List
+This is a web application, so you need to install Xampp to test it. In order to use asynchronous chat, you have to allow microphones permision.
 
-1. Numbered
-2. List
+### Installation
 
-**Bold** and _Italic_ and `Code` text
+1. Clone this project and store it in htdocs folder of Xampp.
+2. Import database scripts in phpMyAdmin.
+3. Run the app and enjoy!
 
-[Link](url) and ![Image](src)
-```
+## Developers
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+This project was developed by Emilio Crespo and Andrei Erhan at the [Open Summer of Code 2019](https://2019.summerofcode.es/2019.html) held in Madrid, Spain.
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/EmilioCrespoPeran/WhoTalks/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
