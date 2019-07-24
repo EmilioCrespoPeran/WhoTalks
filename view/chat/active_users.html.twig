@@ -1,0 +1,7 @@
+{% if users|length > 0 %}
+    {% for user in users %}
+        <p class="rounded" style="background-color: ghostwhite; margin: 5px; padding: 5px;"><span class="text-success">{{ user.getUsername }}</span></p>
+    {% endfor %}
+{% else %}
+    <p class="rounded" style="background-color: ghostwhite; margin: 5px; padding: 5px;"><span class="text-info">No hay usuarios conectados</span></p>
+{% endif %}

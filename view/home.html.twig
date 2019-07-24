@@ -5,6 +5,8 @@
 <div class="col-12">
     {% include 'meeting/form.html.twig' %}
 
+    <a href="{{ url_root }}logout/">Cerrar sesi&oacute;n</a>
+
     {% if meetings|length > 0 %}
         <h1>Lista de reuniones</h1>
 

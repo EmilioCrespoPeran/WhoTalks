@@ -9,12 +9,13 @@
 
         setInterval(function(){
             fetch_messages();
+            fetch_users();
         }, 1000);
 
 
         setInterval(function(){
             send_message();
-        }, 5000);
+        }, 1000);
 
 
         setInterval(function () {
@@ -34,8 +35,18 @@
             })
         }
 
+        function fetch_users() {
+            $.ajax({
+                url: '{{ url_root }}meeting/users/',
+                method: "POST",
+                success: function(data){
+                    $('#active_users').html(data);
+                }
+            })
+        }
+
         function send_message() {
-            var value = $.trim(document.getElementById("final").innerHTML);
+            var value = document.getElementById("final").innerHTML.trim();
             if (value != "") {
                 $.ajax({
                     type: "POST",
@@ -50,24 +61,6 @@
             }
 
         }
-
-/*
-        $("#form_chat").bind('submit', function (e) {
-            var value = $.trim($("#input_message").val());
-            if (value != "") {
-                $.ajax({
-                    type: "POST",
-                    url: "{{ url_root }}meeting/send_message/",
-                    dataType: "html",
-                    data: { "message": value },
-                    success: function() {}
-                });
-            }
-
-            e.preventDefault();
-            return false;
-        });
-*/
     });
 
 </script>
@@ -82,22 +75,42 @@
         <h1>{{ meeting.getName }}</h1>
 
 
-        <h3>Lista de mensajes</h3>
 
         <div class="row">
 
-            <div class="col-2">
+            <div class="col-3">
                 <button id="btnMicro" onclick="startButton(event)">Micr&oacute;fono</button> <br/>
+
                 <p id="info" class="text-info"></p>
-                <p>
-                    <span id="final" style="color: black;"></span>
-                    <span id="intermediate" style="color: darkgrey;"></span>
+
+
+                <div class="rounded" style="background-color: #4b636e; padding: 3px;">
+                    <p style="font-size: large; text-align: center; color: white;">Usuarios conectados</p>
+
+
+                    <p id="active_users">
+
+                    </p>
+                </div>
+
+
+                <a class="btn btn-danger" href="{{ url_root }}" style="margin-top: 20px; text-align: center;">Salir de la reuni&oacute;n</a>
+
+                <p style="margin-top: 30px;">
+                    <span>Texto reconocido:</span>
+                    <p class="rounded" style="background-color: black; padding: 5px;">
+                        <span id="final" style="color: white;"></span>
+                        <span id="intermediate" style="color: darkgray;"></span>
+                    </p>
                 </p>
+
             </div>
+            <div class="offset-1 col-8">
+                <h3>Lista de mensajes</h3>
 
-            <div id="chat" class="offset-1 col-8">
+                <div id="chat">
 
-
+                </div>
             </div>
         </div>
 <!--
@@ -216,7 +229,7 @@
 
 
         function displayInfo(value) {
-            document.getElementById('info').innerHTML = value;
+            document.getElementById("info").innerHTML = value;
         }
 
     </script>

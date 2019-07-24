@@ -2,10 +2,11 @@
 
 {% block body %}
 
-<div class="col-12" style="background-color: gray;">
+    <div class="col-12" style="margin-top: 50px;">
 
     <div class="row">
-        <div class="offset-4 col-4" style="background-color: white;">
+
+        <div class="offset-4 col-4 rounded" style="background-color: white; padding: 20px;">
             <p class="m-2"><h2>Reg&iacute;strate</h2></p>
             <form method="POST" action="{{ url_root }}save/">
                 <div class="form-group">
@@ -23,5 +24,7 @@
     </div>
 
 </div>
+
+
 
 {% endblock %}

@@ -3,31 +3,43 @@ namespace controller;
 
 use model\Meeting;
 use model\Message;
+use model\User;
 
+require_once PATH_APP . "/model/UserManager.php";
 require_once PATH_APP . "/model/MeetingManager.php";
 require_once PATH_APP . "/model/MessageManager.php";
+require_once PATH_APP . "/model/UserMeetingManager.php";
 
 class MessageController extends ApplicationController {
 
     private $meetingManager;
     private $messageManager;
+    private $usermeetingManager;
 
     public function __construct() {
         $this->meetingManager = new \model\MeetingManager();
         $this->messageManager = new \model\MessageManager();
+        $this->usermeetingManager = new \model\UserMeetingManager();
     }
 
 
     public function home() {
-        $meeting = new Meeting();
         $_SESSION['meeting_id'] = $_POST['meeting_id'];
+
+        $user = new \model\User();
+        $user->setUsername($_SESSION['username']);
+
+        $meeting = new \model\Meeting();
         $meeting->setId($_POST['meeting_id']);
 
         $meeting = $this->meetingManager->get_meeting($meeting);
+        $this->usermeetingManager->add_user_meeting($user, $meeting);
+        $user_list = $this->usermeetingManager->users_in_meetings($user, $meeting);
 
         parent::response(
             'chat/home.html.twig', array(
-                'meeting' => $meeting
+                'meeting' => $meeting,
+                'users' => $user_list
             )
         );
     }
@@ -55,4 +67,17 @@ class MessageController extends ApplicationController {
         ));
     }
 
+
+    public function fetch_users() {
+        $user = new \model\User();
+        $user->setUsername($_SESSION['username']);
+
+        $meeting = new \model\Meeting();
+        $meeting->setId($_SESSION['meeting_id']);
+
+        $user_list = $this->usermeetingManager->users_in_meetings($user, $meeting);
+        parent::response('chat/active_users.html.twig', array(
+            'users' => $user_list
+        ));
+    }
 }

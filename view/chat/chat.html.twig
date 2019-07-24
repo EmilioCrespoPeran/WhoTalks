@@ -1,7 +1,9 @@
 {% if messages|length > 0 %}
     {% for m in messages %}
-        <p class="text-muted m-1" style="background-color: #c3e6cb;">
+        <p class="text-muted m-1 rounded" style="background-color: #c3e6cb;">
             {% include 'chat/message.html.twig' %}
         </p>
     {% endfor %}
+{% else %}
+    <p><span class="text-capitalize text-center">No hay mensajes.</span></p>
 {% endif %}
