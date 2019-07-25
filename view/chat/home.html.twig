@@ -1,4 +1,4 @@
-{% extends 'template.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block js %}
 <script>
@@ -72,14 +72,10 @@
 
     <div class="col-12">
 
-        <h1>{{ meeting.getName }}</h1>
-
-
-
         <div class="row">
 
             <div class="col-3">
-                <button id="btnMicro" onclick="startButton(event)">Micr&oacute;fono</button> <br/>
+                <button id="btnMicro" class="btn btn-warning" onclick="startButton(event)">Micr&oacute;fono</button> <br/>
 
                 <p id="info" class="text-info"></p>
 

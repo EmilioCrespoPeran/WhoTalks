@@ -36,10 +36,13 @@ class MessageController extends ApplicationController {
         $this->usermeetingManager->add_user_meeting($user, $meeting);
         $user_list = $this->usermeetingManager->users_in_meetings($user, $meeting);
 
+        $section = "Reunión ". $meeting->getName();
+
         parent::response(
             'chat/home.html.twig', array(
                 'meeting' => $meeting,
-                'users' => $user_list
+                'users' => $user_list,
+                'section' => $section
             )
         );
     }

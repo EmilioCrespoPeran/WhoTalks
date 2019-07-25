@@ -58,11 +58,6 @@ class RoutingController {
         "/meeting/users/" => array(
             "controller" => "Message",
             "function" => "fetch_users"
-        ),
-        "/prueba/" => array(
-            "controller" => "Prueba",
-            "function" => "home",
-            "anonimous" => true
         )
     );
 

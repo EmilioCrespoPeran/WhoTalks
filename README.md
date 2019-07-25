@@ -25,7 +25,19 @@ This is a web application, so you need to install Xampp to test it. In order to 
 
 ## Developers
 
-This project was developed by Emilio Crespo and Andrei Erhan at the [Open Summer of Code 2019](https://2019.summerofcode.es/2019.html) held in Madrid, Spain.
+This project was developed by 
+
+Emilio Crespo 
+> [LinkedIn](https://www.linkedin.com/in/emilio-crespo-aa95a8a5/)
+[Github](https://github.com/EmilioCrespoPeran)
+emiliocrespoperan@gmail.com
+
+Andrei Erhan 
+> [LinkedIn](https://www.linkedin.com/in/andrei-erhan-1764bb182/)
+[Github](https://github.com/Andravitar)
+andrei.andraven@gmail.com
+
+at the [Open Summer of Code 2019](https://2019.summerofcode.es/2019.html) held in Madrid, Spain.
 
 
 

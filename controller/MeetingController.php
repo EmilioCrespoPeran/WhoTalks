@@ -32,17 +32,19 @@ class MeetingController extends ApplicationController {
         }
 
         $meeting_list = $this->meetingManager->get_meeting_list();
+        $section = "¡Bienvenido a WhoTalks ". $_SESSION['username'] ."!";
 
         parent::response("home.html.twig", array(
-            'meetings' => $meeting_list
+            'meetings' => $meeting_list,
+            'section' => $section
         ));
     }
-
+/*
     public function create() {
         $view = "meeting/form.html.twig";
         parent::response($view);
     }
-
+*/
     public function save() {
         $meeting = new \model\Meeting();
         $meeting->setName($_POST['name']);

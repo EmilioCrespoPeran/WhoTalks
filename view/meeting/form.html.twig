@@ -1,7 +1,13 @@
-<div class="col-12">
-    <h1>Crear nueva reuni&oacute;n</h1>
-    <form method="POST" action="{{ url_root }}meeting/save/">
-        <input type="text" name="name" placeholder="Escribe un nombre">
-        <button type="submit">Guardar</button>
+<div class="rounded" style="background-color: white; padding: 10px;">
+    <div class="text-center">
+        <p><h3>Crear nueva reuni&oacute;n</h3></p>
+    </div>
+    <form class="form-inline" method="POST" action="{{ url_root }}meeting/save/">
+        <div class="form-group mx-sm-3">
+            <input class="form-control" type="text" name="name" placeholder="Escribe un nombre">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-primary align-items-center" type="submit">Guardar</button>
+        </div>
     </form>
 </div>

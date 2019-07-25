@@ -1,24 +1,21 @@
-{% extends 'template.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
 
 <div class="col-12">
-    {% include 'meeting/form.html.twig' %}
 
-    <a href="{{ url_root }}logout/">Cerrar sesi&oacute;n</a>
+    <div class="row">
 
-    {% if meetings|length > 0 %}
-        <h1>Lista de reuniones</h1>
+        <div class="col-md-3 col-3">
+            {% include 'meeting/form.html.twig' %}
+        </div>
 
-        <div class="row">
-            <div class="offset-2 col-8">
+        <div class="offset-1 col-md-8 col-8">
+
+            {% if meetings|length > 0 %}
+                <h3>Lista de reuniones</h3>
+
                 <table class="table table-dark">
-                    <thead>
-                    <tr>
-                        <th scope="col">Reuni&oacute;n</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
                     <tbody>
                     {% for item in meetings %}
                         <tr>
@@ -35,14 +32,22 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            </div>
+
+            {% else %}
+                <h1>No hay reuniones disponibles</h1>
+                <p class="text-muted">
+                    <a href="{{ url_root }}new/">Crear nueva reuni&oacute;n</a>.
+                </p>
+            {% endif %}
+
         </div>
-    {% else %}
-        <h1>No hay reuniones disponibles</h1>
-        <p class="text-muted">
-            <a href="{{ url_root }}new/">Crear nueva reuni&oacute;n</a>.
-        </p>
-    {% endif %}
+
+    </div>
+
+
+
+
+
 </div>
 
 {% endblock %}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-07-2019 a las 11:37:07
+-- Tiempo de generación: 25-07-2019 a las 11:11:38
 -- Versión del servidor: 10.3.16-MariaDB
 -- Versión de PHP: 7.3.7
 
@@ -33,6 +33,8 @@ CREATE TABLE `meeting` (
   `name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
 -- Estructura de tabla para la tabla `message`
 --
@@ -45,6 +47,7 @@ CREATE TABLE `message` (
   `date_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `user`
@@ -55,6 +58,16 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_meeting`
+--
+
+CREATE TABLE `user_meeting` (
+  `username` varchar(20) NOT NULL,
+  `meeting_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Índices para tablas volcadas
@@ -81,6 +94,13 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
 
 --
+-- Indices de la tabla `user_meeting`
+--
+ALTER TABLE `user_meeting`
+  ADD PRIMARY KEY (`username`,`meeting_id`),
+  ADD KEY `fk_meeting_user` (`meeting_id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -88,13 +108,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `meeting`
 --
 ALTER TABLE `meeting`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `message`
 --
 ALTER TABLE `message`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
 
 --
 -- Restricciones para tablas volcadas
@@ -106,6 +126,13 @@ ALTER TABLE `message`
 ALTER TABLE `message`
   ADD CONSTRAINT `message_fk_meeting` FOREIGN KEY (`meeting_id`) REFERENCES `meeting` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `message_fk_user` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `user_meeting`
+--
+ALTER TABLE `user_meeting`
+  ADD CONSTRAINT `fk_meeting_user` FOREIGN KEY (`meeting_id`) REFERENCES `meeting` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_meeting` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
